@@ -4,7 +4,7 @@ import { BsEmojiSunglasses } from "react-icons/bs";
 import ModalConfirmSubmit from "@/components/ModalConfirmSubmit";
 import { socket } from "../../socket";
 import { useDispatch, useSelector } from "react-redux";
-import { getLocalStorageItems } from "@/utils/helpers";
+import { getLocalStorageItems, setLocalStorageItems } from "@/utils/helpers";
 import { postUserData } from "@/redux/features/userSlice";
 import Image from "next/image";
 import { allMessages, postNewMessage } from "@/services/postNewMessage";
@@ -20,7 +20,7 @@ export default function HomeLayout({ children }) {
   const user = useSelector(state => state.user.userData)
   const selectedUser = useSelector(state => state.chat.selectedUser)
   const messagessNew = useSelector(state => state.chat.messages)
-  const userLocalestorage = localStorage.getItem("user_data");
+  const userLocalestorage = getLocalStorageItems("user_data");
   const dispatch = useDispatch()
 
   const [show, setShow] = useState(false);
@@ -46,7 +46,7 @@ export default function HomeLayout({ children }) {
 
       receiverLog()
 
-      const data = localStorage.getItem("selectedUser")
+      const data = getLocalStorageItems("selectedUser")
       const audio = new Audio("/Notificación.mp3");
       audio.play();
 
@@ -97,8 +97,8 @@ export default function HomeLayout({ children }) {
   }
 
   useEffect(() => {
-    const theme = localStorage.getItem("theme");
-    if (typeof window !== 'undefined') {
+    const theme = getLocalStorageItems("theme");
+    if (process.browser) {
       if (theme === "dark") {
         document.querySelector("html").classList.add("dark");
       } else {
@@ -124,7 +124,7 @@ export default function HomeLayout({ children }) {
       dispatch(resetMessagesOrUpdate(datos.data))
     }
     data()
-    localStorage.setItem("selectedUser", selectedUser.userId);
+    setLocalStorageItems("selectedUser", selectedUser.userId);
 
   }, [selectedUser]);
 

@@ -123,15 +123,16 @@ export class UserService {
         }
     }
 
-    async notification(userId: string): Promise<MessageEntity[]> {
+    async notification(userId: string): Promise< MessageEntity[]> {
         try {
             const allMessage = await MessageEntity.find({
                 where: [
                     { receiver: userId },
                 ]
             })
-            if (allMessage.length === 0) throw Error('failed to find message');
+            if (allMessage.length === 0) throw Error("not new message") ;
             const data = allMessage.filter(message => message.status === "1")
+            if (data.length === 0) return [];
 
             return data;
         } catch (error) {

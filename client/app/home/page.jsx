@@ -9,7 +9,7 @@ import { useState } from "react";
 import { FaRegUser } from "react-icons/fa";
 
 
-function BarraLateral() {
+export default function BarraLateral() {
 
   const [tabs, setTabs] = useState(1);
   
@@ -22,7 +22,7 @@ function BarraLateral() {
           <div className="flex items-center justify-between">
             {/*mi avatr*/}
             <Link href="/home/perfil">
-
+ 
               <div className="w-12 h-12 dark:bg-slate-800  bg-white rounded-full flex items-center justify-center text-slate-600 dark:text-slate-300 text-xl font-semibold" >
                 <FaRegUser />
               </div>
@@ -62,4 +62,3 @@ function BarraLateral() {
   )
 }
 
-export default BarraLateral

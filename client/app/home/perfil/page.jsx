@@ -9,9 +9,10 @@ import { PerfilUser } from "@/services/perfil";
 import { ImPencil } from "react-icons/im";
 import { AiOutlineClose } from "react-icons/ai";
 import { AiOutlineCheck } from "react-icons/ai";
+import { getLocalStorageItems, setLocalStorageItems } from "@/utils/helpers";
 
 
-function BarraPerfil() {
+export default function BarraPerfil() {
   const [perfil, setPerfil] = useState({
     name:"",
     phone:"",
@@ -24,13 +25,10 @@ function BarraPerfil() {
   });
   // Esta función cambia el tema
   const [theme, setTheme] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const storedTheme = localStorage.getItem("theme");
+  
+      const storedTheme = getLocalStorageItems("theme");
       return storedTheme || "light";
-    } else {
-      // Si no está en el navegador, devuelve un valor por defecto
-      return "light";
-    }
+
   });
 
 
@@ -40,7 +38,7 @@ function BarraPerfil() {
   }
 
   useEffect(() => {
-    const dataUser = JSON.parse(localStorage.getItem("user_data"));
+    const dataUser = JSON.parse(getLocalStorageItems("user_data"));
     const perfil = async () => {
       const data = await PerfilUser(dataUser.userId);
       setPerfil(data);
@@ -49,7 +47,7 @@ function BarraPerfil() {
   }, []);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (process.browser) {
       if (theme === "dark") {
         document.querySelector("html").classList.add("dark");
       } else {
@@ -59,15 +57,15 @@ function BarraPerfil() {
   }, [theme]);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem("theme", theme);
+    if (process.browser) {
+      setLocalStorageItems("theme", theme);
     }
   }, [theme]);
   return (
     <div className="w-1/4  dark:bg-gray-800 dark:text-white ">
       <div className="bg-[#0ed3cf] pt-8 pl-5 pb-4 flex flex-wrap text-white space-x-28 ">
         <div className="flex flex-wrap" >
-          <Link href="/home"><BiLeftArrowAlt size="30px" /></Link>
+          <Link href="/home"><BiLeftArrowAlt size="30px" /></Link>  
           <p className="ml-3 font-semibold text-lg">Perfil</p>
         </div>
         <div className=" flex flex-wrap  items-center">
@@ -147,5 +145,3 @@ function BarraPerfil() {
     </div>
   );
 }
-
-export default BarraPerfil;

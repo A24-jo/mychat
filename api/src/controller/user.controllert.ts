@@ -47,7 +47,7 @@ export class UserController {
 
         const userId = req.params.userId;
         const sherach = await this.userService.notification(userId);
-        if(sherach.length === 0) return res.status(400).json(sherach);
+        if(sherach.length === 0) return res.status(200).json(sherach);
         return res.status(200).json(sherach);
     }
 

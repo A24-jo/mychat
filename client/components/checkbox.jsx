@@ -1,10 +1,11 @@
 "use client"
+import { getLocalStorageItems, setLocalStorageItems } from "@/utils/helpers";
 import { useEffect, useState } from "react";
 
 const ToggleCheckbox = () => {
   const [isChecked, setIsChecked] = useState( false);
   const [theme, setTheme] = useState(() => {
-    const storedTheme = localStorage.getItem("theme");
+    const storedTheme = getLocalStorageItems("theme");
     return storedTheme || "light";
   });
 
@@ -22,7 +23,7 @@ const ToggleCheckbox = () => {
   };
 
   useEffect(() => {
-    localStorage.setItem("theme", theme);
+    setLocalStorageItems("theme", theme);
   }, [theme]);
 
   return (

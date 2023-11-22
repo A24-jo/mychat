@@ -32,7 +32,7 @@ export default function Home() {
     setLocalStorageItems("user_token",res.token)
     setLocalStorageItems("user_data",JSON.stringify(res.user))
     return navigate.push("/home");
-  };
+  }; 
 
   const handleInputChange = (e) => {
     setLoginStates((prev) => ({

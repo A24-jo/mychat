@@ -3,13 +3,14 @@
 import { NewNotificate, formtContact, getAllContacts, setSelectedUser } from "@/redux/features/chatSlice";
 import { getRandomColor } from "@/services/colorRamdon";
 import { numberTheNotifications, visto } from "@/services/statusMessage";
+import { getLocalStorageItems } from "@/utils/helpers";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 const Contacts = () => {
 
   const contacts = useSelector(state => state.chat.contacts)
-  const userLocalestorage = localStorage.getItem('user_data');
+  const userLocalestorage = getLocalStorageItems('user_data');
   const notificatios = useSelector(state => state.chat.messagesNew)
   const dispatch = useDispatch();
 
