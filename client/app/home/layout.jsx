@@ -150,7 +150,7 @@ export default function HomeLayout({ children }) {
         </div>
         {/* Lista de mensajes */}
         <div className="flex-1 p-4 overflow-y-auto ">
-          {messagessNew?.map((data, index) => {
+          {messagessNew?.map((data, index) => { 
 
             const isSender = data.sender === user.userId;
 
