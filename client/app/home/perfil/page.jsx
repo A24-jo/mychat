@@ -47,7 +47,7 @@ export default function BarraPerfil() {
   }, []);
 
   useEffect(() => {
-    if (process.browser) {
+    if (typeof window !== 'undefined') {
       if (theme === "dark") {
         document.querySelector("html").classList.add("dark");
       } else {
@@ -57,7 +57,7 @@ export default function BarraPerfil() {
   }, [theme]);
 
   useEffect(() => {
-    if (process.browser) {
+    if (typeof window !== 'undefined') {
       setLocalStorageItems("theme", theme);
     }
   }, [theme]);

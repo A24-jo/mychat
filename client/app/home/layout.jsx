@@ -98,7 +98,7 @@ export default function HomeLayout({ children }) {
 
   useEffect(() => {
     const theme = getLocalStorageItems("theme");
-    if (process.browser) {
+    if (typeof window !== 'undefined') {
       if (theme === "dark") {
         document.querySelector("html").classList.add("dark");
       } else {
