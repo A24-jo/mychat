@@ -16,4 +16,7 @@ exports.AppDataSource = new typeorm_1.DataSource({
     entities: [message_entity_1.MessageEntity, user_entity_1.UserEntity],
     logging: true,
     synchronize: true,
+    ssl: {
+        rejectUnauthorized: true,
+    },
 });

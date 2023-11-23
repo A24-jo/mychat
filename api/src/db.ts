@@ -16,4 +16,7 @@ export const AppDataSource = new DataSource({
     entities:[MessageEntity,UserEntity],
     logging:true,
     synchronize:true,
+    ssl: {
+        rejectUnauthorized: true,
+    },
 });
