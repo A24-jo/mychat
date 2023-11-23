@@ -4,7 +4,7 @@ import app from './app';
 
 const server = http.createServer(app);
 const io = new SocketServer(server,{
-    cors:{origin:'http://localhost:3000',methods:['get', 'post']},
+    cors:{origin:'https://mychat-1c7cbdf0n-a24-jo.vercel.app',methods:['get', 'post']},
 });
 
 
