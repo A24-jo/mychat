@@ -13,14 +13,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 require("reflect-metadata");
-const app_1 = __importDefault(require("./app"));
+const socket_1 = __importDefault(require("./socket"));
 const db_1 = require("./db");
+const dotenv_1 = require("dotenv");
+(0, dotenv_1.config)();
+const port = process.env.APP_PORT || 4001;
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             yield db_1.AppDataSource.initialize();
-            app_1.default.listen(4000);
-            console.log("listen server🥺", 4000);
+            socket_1.default.listen(port);
+            console.log("listen server🥺", port);
         }
         catch (error) {
             console.error(error);
