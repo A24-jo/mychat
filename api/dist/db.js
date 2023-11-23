@@ -17,6 +17,6 @@ exports.AppDataSource = new typeorm_1.DataSource({
     logging: true,
     synchronize: true,
     ssl: {
-        rejectUnauthorized: true,
+        rejectUnauthorized: false,
     },
 });
