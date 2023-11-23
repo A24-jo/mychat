@@ -5,7 +5,7 @@ import { config } from "dotenv";
 
 config()
 
-const port  = process.env.APP_PORT;
+const port  = process.env.APP_PORT || 4001;
 
 async function main() {
     try {
