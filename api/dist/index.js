@@ -17,7 +17,7 @@ const socket_1 = __importDefault(require("./socket"));
 const db_1 = require("./db");
 const dotenv_1 = require("dotenv");
 (0, dotenv_1.config)();
-const port = process.env.APP_PORT || 4001;
+const port = process.env.APP_PORT;
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
