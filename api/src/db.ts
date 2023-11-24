@@ -15,7 +15,7 @@ export const AppDataSource = new DataSource({
     database: process.env.MYSQL_DATABASE ,
     entities:[MessageEntity,UserEntity],
     logging:true,
-    synchronize:true,
+    synchronize:true, 
     ssl: {
         rejectUnauthorized: false,
     },
