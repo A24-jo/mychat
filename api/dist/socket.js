@@ -8,7 +8,7 @@ const socket_io_1 = require("socket.io");
 const app_1 = __importDefault(require("./app"));
 const server = http_1.default.createServer(app_1.default);
 const io = new socket_io_1.Server(server, {
-    cors: { origin: 'https://mychat-1c7cbdf0n-a24-jo.vercel.app', methods: ['get', 'post'] },
+    cors: { origin: 'https://mychat-woad-nine.vercel.app', methods: ['get', 'post'] },
 });
 io.on('connection', (socket) => {
     socket.on("join_room", ({ userId }) => {

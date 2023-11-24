@@ -1,7 +1,7 @@
 import express from "express";
 import morgan from "morgan";
 import cors from "cors";
-import bodyParser from "body-parser" 
+import bodyParser from "body-parser"    
 import { AppRouter } from "./routes";
 
 const app = express();
