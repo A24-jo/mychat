@@ -28,7 +28,7 @@ export default function BarraLateral() {
               </div>
             </Link>
             <div className="flex justify-between gap-4">
-              <div className="text-slate-700 font-semibold dark:text-slate-100" >{tabs === 1? "CHATS" : "+ FRIENTS" } </div>
+              <div className="text-slate-700 font-semibold dark:text-slate-100" >{tabs === 1? "CHATS" : "+ friends" } </div>
               <i
                 onClick={() => setTabs(1)}
                 className="fas fa-plus-circle text-2xl cursor-pointer text-slate-600 hover:text-gray-400 dark:text-white dark:hover:text-neutral-300">
