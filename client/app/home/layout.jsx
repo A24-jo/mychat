@@ -8,12 +8,13 @@ import { getLocalStorageItems, setLocalStorageItems } from "@/utils/helpers";
 import { postUserData } from "@/redux/features/userSlice";
 import Image from "next/image";
 import { allMessages, postNewMessage } from "@/services/postNewMessage";
-import { notificationss, resetMessagesOrUpdate, setNewMessage } from "@/redux/features/chatSlice";
+import { notificationss, resetMessagesOrUpdate, setNewMessage, setSelectedUser } from "@/redux/features/chatSlice";
 import { Dates } from "@/services/date";
 import { receiver } from "@/services/statusMessage";
-import { CgRadioCheck } from "react-icons/cg"; 
+import { CgRadioCheck } from "react-icons/cg";
 import { CgRadioChecked } from "react-icons/cg";
 import { CgCheckO } from "react-icons/cg";
+import { IoClose } from "react-icons/io5";
 
 
 export default function HomeLayout({ children }) {
@@ -53,7 +54,7 @@ export default function HomeLayout({ children }) {
       if (message.sender === data) {
         dispatch(setNewMessage(message))
       }
-      
+
       dispatch(notificationss(message));
     })
   }
@@ -61,6 +62,8 @@ export default function HomeLayout({ children }) {
 
 
   const handleClick = async () => {
+
+    if (!input.text.trim().length) return;
 
     const date = Dates()
     await postNewMessage({
@@ -134,7 +137,7 @@ export default function HomeLayout({ children }) {
       {children}
       {!!Object.entries(selectedUser).length ? (<div className="flex-1 flex flex-col">
         {/* Encabezado del chat */}
-        <div className="bg-gray-200 p-4 border-b border-gray-300 dark:border-gray-600 dark:bg-gray-700">
+        <div className=" flex items-center justify-between  bg-gray-200 p-4 border-b border-gray-300 dark:border-gray-600 dark:bg-gray-700">
           <div className="flex items-center">
             {/*avtar del amigo*/}
             <div className="w-12 h-12 rounded-full flex items-center justify-center text-white text-xl font-semibold"
@@ -147,10 +150,11 @@ export default function HomeLayout({ children }) {
               {selectedUser?.name}
             </h2>
           </div>
+          <button onClick={() => dispatch(setSelectedUser({}))} className=" text-slate-600 dark:text-slate-100 transition-transform transform hover:scale-125" ><IoClose size={"30px"}/></button>
         </div>
         {/* Lista de mensajes */}
         <div className="flex-1 p-4 overflow-y-auto ">
-          {messagessNew?.map((data, index) => { 
+          {messagessNew?.map((data, index) => {
 
             const isSender = data.sender === user.userId;
 
@@ -164,14 +168,14 @@ export default function HomeLayout({ children }) {
                 >
                   {data.message}
                   <div className="flex">
-                     <h6 className="dark:text-slate-500 font-bold text-xs ">{hora} </h6>
-                     <div className="ml-3">
+                    <h6 className="dark:text-slate-500 font-bold text-xs ">{hora} </h6>
+                    <div className="ml-3">
                       {data.status == 0 && <CgRadioCheck />}
                       {data.status == 1 && <CgRadioChecked />}
                       {data.status == 2 && <CgCheckO />}
-                      </div>
+                    </div>
                   </div>
-                 
+
                   <div
                     className={`absolute ${isSender ? ' right-[-8px]' : ' left-[-8px]'} bottom-8 w-1 h-1 border-t-8 border-transparent border-r-8 border-l-8 ${isSender ? 'border-t-[#0ed3cf]' : 'border-t-[#767777] dark:border-t-[#2a2d30]'
                       }`}
