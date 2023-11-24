@@ -71,7 +71,7 @@ const Contacts = () => {
                 </p>
               </div>
               {modifiedContact.notifications !== 0 && (
-                <div className="ml-6 w-4 h-4 bg-red-600 rounded-full flex items-center justify-center text-white text-xl font-semibold">
+                <div className="ml-6 w-4 h-4  text-xs bg-red-600 rounded-full flex items-center justify-center text-white  font-semibold">
                   {modifiedContact.notifications}
                 </div>
               )}
