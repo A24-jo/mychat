@@ -201,4 +201,37 @@ export class UserService {
         }
     }
 
+    async ediPerfil(user:UserEntity): Promise< string > {
+        try {
+            const {name,email,phone,userId} = user;
+            const existingUser = await UserEntity.findOne({where:{ userId }});
+
+            // Verificar si el usuario existe
+            if (existingUser) {
+                // Actualizar solo los campos proporcionados
+                if (name !== undefined) {
+                    existingUser.name = name;
+                }
+    
+                if (email !== undefined) {
+                    existingUser.email = email;
+                }
+    
+                if (phone !== undefined) {
+                    existingUser.phone = phone;
+                }
+    
+                await existingUser.save();
+    
+                return 'Perfil actualizado exitosamente';
+            } else {
+                return 'Usuario no encontrado';
+            }
+        } catch (error) {
+            console.error(error);
+            return 'ocuarrio un error';
+        }
+
+    }
+
 }

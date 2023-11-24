@@ -19,6 +19,7 @@ class UserRoutes {
         router.get('/notifications/:userId', controller.getNotificationsUser);
         router.get('/received/:userId/:status', controller.getReceiverMessage);
         router.get('/visible/:userId/:contactId', controller.getVistoMessage);
+        router.post('/update', controller.postUsermodified);
         return router;
     }
 }

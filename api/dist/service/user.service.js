@@ -177,5 +177,35 @@ class UserService {
             }
         });
     }
+    ediPerfil(user) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { name, email, phone, userId } = user;
+                const existingUser = yield user_entity_1.UserEntity.findOne({ where: { userId } });
+                // Verificar si el usuario existe
+                if (existingUser) {
+                    // Actualizar solo los campos proporcionados
+                    if (name !== undefined) {
+                        existingUser.name = name;
+                    }
+                    if (email !== undefined) {
+                        existingUser.email = email;
+                    }
+                    if (phone !== undefined) {
+                        existingUser.phone = phone;
+                    }
+                    yield existingUser.save();
+                    return 'Perfil actualizado exitosamente';
+                }
+                else {
+                    return 'Usuario no encontrado';
+                }
+            }
+            catch (error) {
+                console.error(error);
+                return 'ocuarrio un error';
+            }
+        });
+    }
 }
 exports.UserService = UserService;

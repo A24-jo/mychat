@@ -3,9 +3,9 @@ import { BiLeftArrowAlt } from "react-icons/bi"
 import { BsBrightnessHigh } from "react-icons/bs"
 import { HiOutlineMoon } from "react-icons/hi"
 import Link from "next/link";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, use } from 'react';
 import { FaRegUser } from "react-icons/fa";
-import { PerfilUser } from "@/services/perfil";
+import { PerfilUser, updatePerfil } from "@/services/perfil";
 import { ImPencil } from "react-icons/im";
 import { AiOutlineClose } from "react-icons/ai";
 import { AiOutlineCheck } from "react-icons/ai";
@@ -14,24 +14,28 @@ import { getLocalStorageItems, setLocalStorageItems } from "@/utils/helpers";
 
 export default function BarraPerfil() {
   const [perfil, setPerfil] = useState({
-    name:"",
-    phone:"",
-    email:"",
+    name: "",
+    phone: "",
+    email: "",
   });
   const [update, setUpdate] = useState({
-    name:true,
-    phone:true,
-    email:true,
+    name: true,
+    phone: true,
+    email: true,
   });
   // Esta función cambia el tema
   const [theme, setTheme] = useState(() => {
-  
-      const storedTheme = getLocalStorageItems("theme");
-      return storedTheme || "light";
+
+    const storedTheme = getLocalStorageItems("theme");
+    return storedTheme || "light";
 
   });
 
-
+  const updateUser = async (data) => {
+    const { name, phone, email, userId } = perfil;
+    await updatePerfil(name, phone, email, userId);
+    setUpdate(data)
+  }
 
   const changeModeTheme = () => {
     setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
@@ -65,7 +69,7 @@ export default function BarraPerfil() {
     <div className="w-1/4  dark:bg-gray-800 dark:text-white ">
       <div className="bg-[#0ed3cf] pt-8 pl-5 pb-4 flex flex-wrap text-white space-x-28 ">
         <div className="flex flex-wrap" >
-          <Link href="/home"><BiLeftArrowAlt size="30px" /></Link>  
+          <Link href="/home"><BiLeftArrowAlt size="30px" /></Link>
           <p className="ml-3 font-semibold text-lg">Perfil</p>
         </div>
         <div className=" flex flex-wrap  items-center">
@@ -84,17 +88,17 @@ export default function BarraPerfil() {
           {update.name ?
             <div className="flex items-center p-3 text-gray-700 dark:text-slate-300 " > {perfil.name}
               <ImPencil className={`ml-4 transition-transform transform hover:scale-125`}
-               onClick={() => setUpdate({...update,name:false})} />
+                onClick={() => setUpdate({ ...update, name: false })} />
             </div> :
             <div className="flex">
               <input
                 type="text"
                 className="w-48 p-1 border-b  border-gray-300 focus:outline-none dark:text-slate-300 text-gray-700 dark:bg-transparent"
                 value={perfil.name}
-                onChange={(e)=>setPerfil({...perfil,name:e.target.value})}
-             />
-              <AiOutlineClose className="ml-2 transition-transform transform hover:scale-125" onClick={() => setUpdate({...update,name:true})} />
-              <AiOutlineCheck className="ml-2 transition-transform transform hover:scale-125" onClick={() => setUpdate({...update,name:true})} />
+                onChange={(e) => setPerfil({ ...perfil, name: e.target.value })}
+              />
+              <AiOutlineClose className="ml-2 transition-transform transform hover:scale-125" onClick={() => setUpdate({ ...update, name: true })} />
+              <AiOutlineCheck className="ml-2 transition-transform transform hover:scale-125" onClick={() => updateUser({ ...update, name: true })} />
             </div>}
         </div>
         <div className="mb-4">
@@ -103,17 +107,17 @@ export default function BarraPerfil() {
           {update.email ?
             <div className="flex items-center p-3 flex-wrap text-gray-700 dark:text-slate-300" > {perfil.email}
               <ImPencil className={`ml-1 transition-transform transform hover:scale-125`}
-               onClick={() => setUpdate({...update,email:false})}  />
+                onClick={() => setUpdate({ ...update, email: false })} />
             </div> :
             <div className="flex">
               <input
                 type="email"
                 className="w-48 p-1 border-b  border-gray-300 focus:outline-none dark:text-slate-300 text-gray-700 dark:bg-transparent"
                 value={perfil.email}
-                onChange={(e)=>setPerfil({...perfil,email:e.target.value})}
+                onChange={(e) => setPerfil({ ...perfil, email: e.target.value })}
               />
-              <AiOutlineClose className="ml-2 transition-transform transform hover:scale-125" onClick={() => setUpdate({...update,email:true})} />
-              <AiOutlineCheck className="ml-2 transition-transform transform hover:scale-125" onClick={() => setUpdate({...update,email:true})} />
+              <AiOutlineClose className="ml-2 transition-transform transform hover:scale-125" onClick={() => setUpdate({ ...update, email: true })} />
+              <AiOutlineCheck className="ml-2 transition-transform transform hover:scale-125" onClick={() => updateUser({ ...update, email: true })} />
             </div>}
 
         </div>
@@ -121,20 +125,20 @@ export default function BarraPerfil() {
           <label className="text-gray-600 dark:text-white">Número de Teléfono:</label>
 
           {update.phone ?
-          <div className="flex items-center p-3 text-gray-700 dark:text-slate-300 " > {perfil.phone}
-            <ImPencil className={`ml-4 transition-transform transform hover:scale-125`} 
-           onClick={() => setUpdate({...update,phone:false})}  />
-          </div> :
-          <div className="flex">
-            <input
-              type="tel"
-              className="w-48 p-1 border-b  border-gray-300 focus:outline-none dark:text-slate-300 text-gray-700 dark:bg-transparent"
-              value={perfil.phone}
-              onChange={(e)=>setPerfil({...perfil,phone:e.target.value})}
-            />
-            <AiOutlineClose className="ml-2 transition-transform transform hover:scale-125" onClick={() => setUpdate({...update,phone:true})}  />
-            <AiOutlineCheck className="ml-2 transition-transform transform hover:scale-125" onClick={() => setUpdate({...update,phone:true})}  />
-          </div>}
+            <div className="flex items-center p-3 text-gray-700 dark:text-slate-300 " > {perfil.phone}
+              <ImPencil className={`ml-4 transition-transform transform hover:scale-125`}
+                onClick={() => setUpdate({ ...update, phone: false })} />
+            </div> :
+            <div className="flex">
+              <input
+                type="tel"
+                className="w-48 p-1 border-b  border-gray-300 focus:outline-none dark:text-slate-300 text-gray-700 dark:bg-transparent"
+                value={perfil.phone}
+                onChange={(e) => setPerfil({ ...perfil, phone: e.target.value })}
+              />
+              <AiOutlineClose className="ml-2 transition-transform transform hover:scale-125" onClick={() => setUpdate({ ...update, phone: true })} />
+              <AiOutlineCheck className="ml-2 transition-transform transform hover:scale-125" onClick={() => updateUser({ ...update, phone: true })} />
+            </div>}
 
 
         </div>

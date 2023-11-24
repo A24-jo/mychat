@@ -69,5 +69,14 @@ export class UserController {
         return res.status(200).json(sherach);
     }
 
+    postUsermodified =async (req:Request,res:Response) => {
+
+        const user = req.body ;
+        const results = await this.userService.ediPerfil(user);
+        if(results === 'ocuarrio un error') return res.status(404).json(results);
+        return res.status(200).json(results);
+        
+    }
+
 
 }

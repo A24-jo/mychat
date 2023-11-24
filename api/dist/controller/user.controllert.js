@@ -59,6 +59,13 @@ class UserController {
                 return res.status(400).json(sherach);
             return res.status(200).json(sherach);
         });
+        this.postUsermodified = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            const user = req.body;
+            const results = yield this.userService.ediPerfil(user);
+            if (results === 'ocuarrio un error')
+                return res.status(404).json(results);
+            return res.status(200).json(results);
+        });
         this.userService = userServise;
     }
 }

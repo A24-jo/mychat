@@ -10,3 +10,14 @@ export async function PerfilUser(dataUser) {
     }
 
 }
+
+export async function updatePerfil(name,phone,email,userId){
+    try {
+        const {data} = await Axios.post(`/user/update`,{name,phone,email,userId});
+        console.log(data)
+        return data
+    } catch (error) {
+        console.error(error);
+        return "";
+    }
+}
