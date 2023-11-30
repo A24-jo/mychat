@@ -2,6 +2,7 @@
 import { postUserData } from "@/redux/features/userSlice";
 import { loginUser } from "@/services/loginUser";
 import { setLocalStorageItems } from "@/utils/helpers";
+import LoginValid from "@/utils/loginValidate";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -16,23 +17,39 @@ export default function Home() {
     password: "",
   });
 
+  const [loginValidate, setLoginValidate] = useState({
+    email: false,
+    password: false,
+    phone: false,
+  });
+
+  const [lowding, setLowding] = useState(false);
+
+  
+
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    
+     const datas =  LoginValid(loginStates.password, loginStates.email, setLoginValidate, loginValidate);
+     if(datas === "error") return;
+      setLowding(true);
     const res = await loginUser({
       email: loginStates.email,
       phone: loginStates.email,
       password: loginStates.password
     })
     if (res.error) {
-      //! mostrar en el fornt que el login fallo 
+      setLowding(false)
       alert("fallo el login");
       return
     }
     dispatch(postUserData(res.user))
-    setLocalStorageItems("user_token",res.token)
-    setLocalStorageItems("user_data",JSON.stringify(res.user))
+    setLocalStorageItems("user_token", res.token)
+    setLocalStorageItems("user_data", JSON.stringify(res.user))
+   
     return navigate.push("/home");
-  }; 
+  };
 
   const handleInputChange = (e) => {
     setLoginStates((prev) => ({
@@ -63,6 +80,8 @@ export default function Home() {
               onChange={handleInputChange}
               className="w-full border border-gray-600 rounded-md py-2 px-3 focus:outline-none focus:border-blue-400 bg-black text-white "
             />
+            {loginValidate.email && <label className="block text-gray-300">"El formato del correo electrónico no es válido."</label>}
+            {loginValidate.phone && <label className="block text-gray-300">"El formato del número de teléfono no es válido."</label>}
           </div>
           <div className="mb-4">
             <label className="block text-gray-300">Password</label>
@@ -74,6 +93,7 @@ export default function Home() {
               onChange={handleInputChange}
               className="w-full border border-gray-600 rounded-md py-2 px-3 focus:outline-none focus:border-blue-400 bg-black text-white "
             />
+            {loginValidate.password && <label className="block text-gray-300">"La contraseña debe tener al menos 8 caracteres."</label>}
           </div>
           <div className="mb-4 flex items-center">
             <input
@@ -91,7 +111,13 @@ export default function Home() {
             type="submit"
             className="bg-[#0ed3cf] hover:bg-[#68cecc] text-white font-semibold rounded-md py-2 px-4 w-full"
           >
-            Login
+            {lowding ? <div className="flex justify-center py-2 px-4 w-full ">
+              <div className="flex flex-row gap-2 ">
+                <div className="w-2 h-2 rounded-full bg-slate-800 animate-bounce"></div>
+                <div className="w-2 h-2 rounded-full bg-slate-800 animate-bounce [animation-delay:-.3s]"></div>
+                <div className="w-2 h-2 rounded-full bg-slate-800 animate-bounce [animation-delay:-.5s]"></div>
+              </div>
+            </div> : <div>Login</div>}
           </button>
         </form>
         <div className=" flex items-center justify-between mt-6 ">

@@ -1,11 +1,13 @@
 "use client";
 
 import { registerUser } from "@/services/registerUser";
+import RegisterValidate from "@/utils/register";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 function Register() {
+
   const [registerForm, setRegisterForm] = useState({
     email: "",
     password: "",
@@ -13,19 +15,43 @@ function Register() {
     phone: "",
   });
 
+  const [Validate, setValidate] = useState({
+    email: false,
+    password: false,
+    phone: false,
+    name: false
+  });
+
+  const [loading , setLoading ] = useState(false);
+
   const navigate = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const datas = RegisterValidate(
+      registerForm.email,
+      registerForm.name,
+      registerForm.password,
+      registerForm.phone,
+      Validate,
+      setValidate);
+   
+
+    setLoading (true);
+    if (datas === "error"){
+      setLoading (false);
+       return
+      };
     // Agregar lógica para el registro aquí
-    await registerUser(registerForm.email,registerForm.name,registerForm.password,registerForm.phone);
+    await registerUser(registerForm.email, registerForm.name, registerForm.password, registerForm.phone);
 
     navigate.push("/");
+
   };
 
-  const handleFormChange = ({target}) => {
-    setRegisterForm(prev => ({...prev, [target.name]: target.value}))
+  const handleFormChange = ({ target }) => {
+    setRegisterForm(prev => ({ ...prev, [target.name]: target.value }))
   }
 
   return (
@@ -52,6 +78,7 @@ function Register() {
               type="text"
               className="w-full border border-gray-600 rounded-md py-2 px-3 focus:outline-none focus:border-blue-400 bg-black text-white"
             />
+            {Validate.name && <label className="block text-gray-300">"Por favor, ingrese un nombre válido (mínimo 3 caracteres)." </label>}
           </div>
           <div className="mb-4">
             <label className="block text-gray-300">Email</label>
@@ -62,6 +89,7 @@ function Register() {
               type="text"
               className="w-full border border-gray-600 rounded-md py-2 px-3 focus:outline-none focus:border-blue-400 bg-black text-white "
             />
+            {Validate.name && <label className="block text-gray-300">"Por favor, ingrese un correo electrónico válido."</label>}
           </div>
           <div className="mb-4">
             <label className="block text-gray-200">Phone</label>
@@ -72,6 +100,7 @@ function Register() {
               type="text"
               className="w-full border border-gray-600 rounded-md py-2 px-3 focus:outline-none focus:border-blue-400 bg-black text-white "
             />
+            {Validate.name && <label className="block text-gray-300">"Por favor, ingrese un número de teléfono válido (al menos 5 dígitos)."</label>}
           </div>
           {/* Password Input */}
           <div className="mb-4">
@@ -83,12 +112,19 @@ function Register() {
               type="password"
               className="w-full border border-gray-600 rounded-md py-2 px-3 focus:outline-none focus:border-blue-400 bg-black text-white "
             />
+            {Validate.name && <label className="block text-gray-300">"La contraseña debe tener al menos 8 caracteres"</label>}
           </div>
           <button
             type="submit"
             className="bg-[#0ed3cf] hover:bg-[rgba(14,211,208,0.63)] text-white font-semibold rounded-md py-2 px-4 w-full"
           >
-            Register
+            {loading  ? <div className="flex justify-center py-2 px-4 w-full ">
+              <div className="flex flex-row gap-2 ">
+                <div className="w-2 h-2 rounded-full bg-slate-800 animate-bounce"></div>
+                <div className="w-2 h-2 rounded-full bg-slate-800 animate-bounce [animation-delay:-.3s]"></div>
+                <div className="w-2 h-2 rounded-full bg-slate-800 animate-bounce [animation-delay:-.5s]"></div>
+              </div>
+            </div> : <div>register</div>}
           </button>
           <div className=" flex items-center justify-between mt-6 ">
             <span className="w-1/5 border-b dark:border-gray-600 md:w-1/4"></span>
