@@ -34,12 +34,12 @@ function Register() {
       registerForm.name,
       registerForm.password,
       registerForm.phone,
-      Validate,
       setValidate);
    
 
     setLoading (true);
     if (datas === "error"){
+
       setLoading (false);
        return
       };
@@ -89,7 +89,7 @@ function Register() {
               type="text"
               className="w-full border border-gray-600 rounded-md py-2 px-3 focus:outline-none focus:border-blue-400 bg-black text-white "
             />
-            {Validate.name && <label className="block text-gray-300">"Por favor, ingrese un correo electrónico válido."</label>}
+            {Validate.email && <label className="block text-gray-300">"Por favor, ingrese un correo electrónico válido."</label>}
           </div>
           <div className="mb-4">
             <label className="block text-gray-200">Phone</label>
@@ -100,7 +100,7 @@ function Register() {
               type="text"
               className="w-full border border-gray-600 rounded-md py-2 px-3 focus:outline-none focus:border-blue-400 bg-black text-white "
             />
-            {Validate.name && <label className="block text-gray-300">"Por favor, ingrese un número de teléfono válido (al menos 5 dígitos)."</label>}
+            {Validate.phone && <label className="block text-gray-300">"Por favor, ingrese un número de teléfono válido (al menos 5 dígitos)."</label>}
           </div>
           {/* Password Input */}
           <div className="mb-4">
@@ -112,7 +112,7 @@ function Register() {
               type="password"
               className="w-full border border-gray-600 rounded-md py-2 px-3 focus:outline-none focus:border-blue-400 bg-black text-white "
             />
-            {Validate.name && <label className="block text-gray-300">"La contraseña debe tener al menos 8 caracteres"</label>}
+            {Validate.password && <label className="block text-gray-300">"La contraseña debe tener al menos 8 caracteres"</label>}
           </div>
           <button
             type="submit"

@@ -1,5 +1,5 @@
 
-export default function RegisterValidate(email, name, password, phone, Validate, setValidate) {
+export default function RegisterValidate(email, name, password, phone, setValidate) {
 
     setValidate({ email: false, password: false, phone: false , name:false });
 
