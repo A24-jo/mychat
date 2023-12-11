@@ -47,6 +47,10 @@ __decorate([
     __metadata("design:type", String)
 ], UserEntity.prototype, "password", void 0);
 __decorate([
+    (0, typeorm_1.Column)("varchar"),
+    __metadata("design:type", String)
+], UserEntity.prototype, "avatarcolor", void 0);
+__decorate([
     (0, typeorm_1.Column)("varchar", { default: false }),
     __metadata("design:type", Boolean)
 ], UserEntity.prototype, "active", void 0);

@@ -31,12 +31,16 @@ const initialState = {
   userProfile: {},
   selectedUser: {},
   messagesNew:[],
+  mobileSelect: 1,
 };
 
 export const chatSlice = createSlice({
   name: "chat",
   initialState,
   reducers: {
+    setMobileSelect:(state,action) => {
+       state.mobileSelect = action.payload
+    },
     setSelectedUser: (state, action) => {
       state.selectedUser = action.payload
     },
@@ -79,5 +83,5 @@ export const chatSlice = createSlice({
   },
 });
 
-export const { setSelectedUser , setNewMessage, resetMessagesOrUpdate,NewNotificate ,formtContact,notificationss} = chatSlice.actions;
+export const { setMobileSelect,setSelectedUser , setNewMessage, resetMessagesOrUpdate,NewNotificate ,formtContact,notificationss} = chatSlice.actions;
 export default chatSlice.reducer;

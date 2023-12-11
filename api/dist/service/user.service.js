@@ -15,11 +15,12 @@ const user_entity_1 = require("../entities/user.entity");
 const typeorm_2 = require("typeorm");
 const message_entity_1 = require("../entities/message.entity");
 class UserService {
-    constructor(uuidGenerator, hashGenerator, compareBcrypt, jsonGenerator) {
+    constructor(uuidGenerator, hashGenerator, compareBcrypt, jsonGenerator, colorRamdon) {
         this.uuid = uuidGenerator;
         this.hashType = hashGenerator;
         this.compareType = compareBcrypt;
         this.jwtTypes = jsonGenerator;
+        this.ramdon = colorRamdon;
     }
     register(user) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -34,13 +35,15 @@ class UserService {
                 if (sheach)
                     throw Error('user exists already');
                 const userId = this.uuid();
+                const createColor = this.ramdon();
                 password = this.hashType(password);
                 const createuser = user_entity_1.UserEntity.create({
                     email,
                     name,
                     password,
                     phone,
-                    userId
+                    userId,
+                    avatarcolor: createColor
                 });
                 yield createuser.save();
                 return 1;

@@ -12,7 +12,7 @@ import { AiOutlineCheck } from "react-icons/ai";
 import { getLocalStorageItems, setLocalStorageItems } from "@/utils/helpers";
 
 
-export default function BarraPerfil() {
+const ModalPerfil = ({ setDataPerfil, mobile }) => {
   const [perfil, setPerfil] = useState({
     name: "",
     phone: "",
@@ -66,16 +66,16 @@ export default function BarraPerfil() {
     }
   }, [theme]);
   return (
-    <div className="w-1/4  dark:bg-gray-800 dark:text-white ">
+    <div className={mobile === 2 ? "w-full h-full" : "menu hidden md:block w-max h-max  dark:bg-gray-800 dark:text-white "}>
       <div className="bg-[#0ed3cf] pt-8 pl-5 pb-4 flex flex-wrap text-white space-x-28 ">
         <div className="flex flex-wrap" >
-          <Link href="/home"><BiLeftArrowAlt size="30px" /></Link>
+          {mobile !== 2 && <BiLeftArrowAlt size="30px" onClick={() => setDataPerfil(1)} />}
           <p className="ml-3 font-semibold text-lg">Perfil</p>
         </div>
-        <div className=" flex flex-wrap  items-center">
+        {mobile !== 2 && <div className=" flex flex-wrap  items-center">
           <BsBrightnessHigh onClick={() => changeModeTheme()} size="30px" className=" bg-gray-600 rounded-md mr-8 p-1 dark:bg-inherit " />
           <HiOutlineMoon onClick={() => changeModeTheme()} size="30px" className="dark:bg-gray-600 rounded-md  " />
-        </div>
+        </div>}
       </div>
       <div className="flex flex-wrap justify-center mt-6">
         <div className="w-44 h-44 dark:bg-slate-600 bg-slate-200 rounded-full flex items-center justify-center dark:text-white text-slate-500 text-xl font-semibold">
@@ -139,8 +139,6 @@ export default function BarraPerfil() {
               <AiOutlineClose className="ml-2 transition-transform transform hover:scale-125" onClick={() => setUpdate({ ...update, phone: true })} />
               <AiOutlineCheck className="ml-2 transition-transform transform hover:scale-125" onClick={() => updateUser({ ...update, phone: true })} />
             </div>}
-
-
         </div>
         <Link href="/"><button className="mt-2 bg-[#0ed3cf] text-white p-2 rounded hover:bg-[#0ed3d0b0]">
           cerrar session
@@ -149,3 +147,5 @@ export default function BarraPerfil() {
     </div>
   );
 }
+
+export default ModalPerfil;

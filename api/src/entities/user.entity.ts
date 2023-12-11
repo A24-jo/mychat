@@ -31,6 +31,9 @@ export class UserEntity extends BaseEntity {
     @Column("varchar")
     password?: string;
 
+    @Column("varchar")
+    avatarcolor?: string;
+
     @Column("varchar",{default:false})
     active: boolean;
 

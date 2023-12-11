@@ -4,6 +4,7 @@ import { UserService } from "../service/user.service";
 import { UuidAdapter } from "../config/uuid";
 import { BcryptAdapter } from "../config/byscript";
 import { JwtAdapter } from "../config/jwt";
+import { ColorRandom } from "../config/colorRamdon";
 
 export class UserRoutes {
   static get routes(): Router {
@@ -14,7 +15,8 @@ export class UserRoutes {
       UuidAdapter.uuidGenerator,
       BcryptAdapter.hash,
       BcryptAdapter.compare,
-      JwtAdapter.generateToken
+      JwtAdapter.generateToken,
+      ColorRandom.colors
     );
 
     const controller = new UserController(userservice);

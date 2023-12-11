@@ -1,7 +1,6 @@
 "use client";
 
-import { NewNotificate, formtContact, getAllContacts, setSelectedUser } from "@/redux/features/chatSlice";
-import { getRandomColor } from "@/services/colorRamdon";
+import { NewNotificate, formtContact, getAllContacts, setMobileSelect, setSelectedUser } from "@/redux/features/chatSlice";
 import { numberTheNotifications, visto } from "@/services/statusMessage";
 import { getLocalStorageItems } from "@/utils/helpers";
 import { useEffect } from "react";
@@ -20,9 +19,9 @@ const Contacts = () => {
         dispatch(formtContact(chat));
   }
 
-  const openchat = (data, avatarColor) => {
-    const datos = { ...data, avatarColor: avatarColor }
-    dispatch(setSelectedUser(datos));
+  const openchat = (data) => {
+    dispatch(setMobileSelect(1))
+    dispatch(setSelectedUser(data));
     messageVisto(data.userId);
   }
 
@@ -52,14 +51,12 @@ const Contacts = () => {
           }
         });
 
-        const avatarColor = getRandomColor();
-
         return (
           <li key={modifiedContact.id} className="p-4 hover:bg-gray-100 cursor-pointer dark:hover:bg-slate-600">
-            <div className="flex items-center" onClick={() => openchat(contact, avatarColor)}>
+            <div className="flex items-center" onClick={() => openchat(contact)}>
               {/* Avatar del amigo */}
               <div className="w-12 h-12 rounded-full flex items-center justify-center text-white text-xl font-semibold"
-                style={{ backgroundColor: avatarColor }}>
+                style={{ backgroundColor:contact?.avatarcolor? contact.avatarcolor : "#0e7ad3"}}>
                 {contact.name[0]}
               </div>
               <div className="ml-4">

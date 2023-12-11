@@ -8,6 +8,7 @@ type uuidType = () => string;
 type hashType = (password: string) => string;
 type compareType = (password: string, hashed: string) => boolean;
 type jwtType = (payload: Object) => string;
+type randon = ()=>string;
 
 export class UserService {
 
@@ -15,18 +16,21 @@ export class UserService {
     hashType: hashType
     compareType: compareType
     jwtTypes: jwtType
+    ramdon: randon
 
 
     constructor(
         uuidGenerator: uuidType,
         hashGenerator: hashType,
         compareBcrypt: compareType,
-        jsonGenerator: jwtType
+        jsonGenerator: jwtType,
+        colorRamdon:randon
     ) {
         this.uuid = uuidGenerator;
         this.hashType = hashGenerator;
         this.compareType = compareBcrypt;
         this.jwtTypes = jsonGenerator;
+        this.ramdon=colorRamdon
     }
 
     async register(user: UserRegisterDto): Promise<number> {
@@ -43,13 +47,15 @@ export class UserService {
             if (sheach) throw Error('user exists already');
 
             const userId = this.uuid()
+            const createColor = this.ramdon()
             password = this.hashType(password);
             const createuser = UserEntity.create({
                 email,
                 name,
                 password,
                 phone,
-                userId
+                userId,
+                avatarcolor:createColor
             });
             await createuser.save();
 

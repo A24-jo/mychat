@@ -1,6 +1,6 @@
 'use client'
 
-import { getAllChats, setSelectedUser } from "@/redux/features/chatSlice";
+import { getAllChats, setMobileSelect, setSelectedUser } from "@/redux/features/chatSlice";
 import { postNewContact } from "@/services/postNewContact";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
@@ -14,7 +14,7 @@ const Chats = ({setTabs}) => {
   const dispatch = useDispatch();
  
   const handleClick = async (contact) => {
-
+    dispatch(setMobileSelect(1))
     const newContact  = await postNewContact({userId: userData.userId,contactId:contact.userId})
     if( typeof newContact === "string"){
       return toast.error(newContact)
