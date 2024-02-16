@@ -22,7 +22,7 @@ export class UserEntity extends BaseEntity {
     @Column("varchar",{nullable:true})
     avatar: string;
 
-    @Column("varchar")
+    @Column("varchar",{nullable:true})
     phone: string;
 
     @Column("varchar")
@@ -42,6 +42,15 @@ export class UserEntity extends BaseEntity {
 
     @Column("varchar",{default:"0"})
     notifications: string;
+
+    @Column("varchar",{ nullable: true })
+    dni: string;
+
+    @Column("varchar",{ nullable: true })
+    apellidomaterno: string;
+
+    @Column("varchar",{ nullable: true })
+    apellidopaterno: string;
 
     @CreateDateColumn()
     createAt: Date;

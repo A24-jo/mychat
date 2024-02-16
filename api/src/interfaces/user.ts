@@ -3,6 +3,9 @@ export interface UserRegisterDto {
     phone: string;
     email: string;
     password: string;
+    dni: string;
+    apellidomaterno: string;
+    apellidopaterno: string;
 }
 
 export interface UserLoginDto {

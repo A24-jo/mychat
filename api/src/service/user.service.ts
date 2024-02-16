@@ -36,7 +36,7 @@ export class UserService {
     async register(user: UserRegisterDto): Promise<number> {
         try {
 
-            let { email, name, password, phone } = user;
+            let { email, name, password, phone,dni,apellidopaterno,apellidomaterno } = user;
 
             const sheach = await UserEntity.findOne({
                 where: [
@@ -44,7 +44,7 @@ export class UserService {
                     { phone: Like(phone) },
                 ],
             });
-            if (sheach) throw Error('user exists already');
+            if (sheach) throw new Error('user exists already');
 
             const userId = this.uuid()
             const createColor = this.ramdon()
@@ -55,7 +55,10 @@ export class UserService {
                 password,
                 phone,
                 userId,
-                avatarcolor:createColor
+                avatarcolor:createColor,
+                dni,
+                apellidopaterno,
+                apellidomaterno
             });
             await createuser.save();
 
@@ -209,7 +212,7 @@ export class UserService {
 
     async ediPerfil(user:UserEntity): Promise< string > {
         try {
-            const {name,email,phone,userId} = user;
+            const {name,email,phone,userId,dni} = user;
             const existingUser = await UserEntity.findOne({where:{ userId }});
 
             // Verificar si el usuario existe
@@ -225,6 +228,9 @@ export class UserService {
     
                 if (phone !== undefined) {
                     existingUser.phone = phone;
+                }
+                if (dni !== undefined) {
+                    existingUser.dni = dni;
                 }
     
                 await existingUser.save();
