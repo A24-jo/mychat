@@ -25,7 +25,7 @@ class UserService {
     register(user) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                let { email, name, password, phone } = user;
+                let { email, name, password, phone, dni, apellidopaterno, apellidomaterno } = user;
                 const sheach = yield user_entity_1.UserEntity.findOne({
                     where: [
                         { email: (0, typeorm_2.Like)(email) },
@@ -33,7 +33,7 @@ class UserService {
                     ],
                 });
                 if (sheach)
-                    throw Error('user exists already');
+                    throw new Error('user exists already');
                 const userId = this.uuid();
                 const createColor = this.ramdon();
                 password = this.hashType(password);
@@ -43,7 +43,10 @@ class UserService {
                     password,
                     phone,
                     userId,
-                    avatarcolor: createColor
+                    avatarcolor: createColor,
+                    dni,
+                    apellidopaterno,
+                    apellidomaterno
                 });
                 yield createuser.save();
                 return 1;
@@ -183,7 +186,7 @@ class UserService {
     ediPerfil(user) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { name, email, phone, userId } = user;
+                const { name, email, phone, userId, dni } = user;
                 const existingUser = yield user_entity_1.UserEntity.findOne({ where: { userId } });
                 // Verificar si el usuario existe
                 if (existingUser) {
@@ -196,6 +199,9 @@ class UserService {
                     }
                     if (phone !== undefined) {
                         existingUser.phone = phone;
+                    }
+                    if (dni !== undefined) {
+                        existingUser.dni = dni;
                     }
                     yield existingUser.save();
                     return 'Perfil actualizado exitosamente';

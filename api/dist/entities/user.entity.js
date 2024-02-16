@@ -35,7 +35,7 @@ __decorate([
     __metadata("design:type", String)
 ], UserEntity.prototype, "avatar", void 0);
 __decorate([
-    (0, typeorm_1.Column)("varchar"),
+    (0, typeorm_1.Column)("varchar", { nullable: true }),
     __metadata("design:type", String)
 ], UserEntity.prototype, "phone", void 0);
 __decorate([
@@ -62,6 +62,18 @@ __decorate([
     (0, typeorm_1.Column)("varchar", { default: "0" }),
     __metadata("design:type", String)
 ], UserEntity.prototype, "notifications", void 0);
+__decorate([
+    (0, typeorm_1.Column)("varchar", { nullable: true }),
+    __metadata("design:type", String)
+], UserEntity.prototype, "dni", void 0);
+__decorate([
+    (0, typeorm_1.Column)("varchar", { nullable: true }),
+    __metadata("design:type", String)
+], UserEntity.prototype, "apellidomaterno", void 0);
+__decorate([
+    (0, typeorm_1.Column)("varchar", { nullable: true }),
+    __metadata("design:type", String)
+], UserEntity.prototype, "apellidopaterno", void 0);
 __decorate([
     (0, typeorm_1.CreateDateColumn)(),
     __metadata("design:type", Date)
